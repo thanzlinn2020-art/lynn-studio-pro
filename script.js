@@ -1,45 +1,67 @@
+const API_KEY = "9344630249d247ec992f6a4d029063fe";
 const newsContainer = document.getElementById("news-container");
+
 const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
+
 const closeBtn = document.getElementById("close");
 const readMoreBtn = document.getElementById("readMore");
 
-let newsData = [
-  {
-    title: "မြန်မာ နိုင်ငံရေး နောက်ဆုံးအခြေအနေ",
-    content: "ဒီနေ့ မြန်မာနိုင်ငံတွင် နိုင်ငံရေးအခြေအနေများ တိုးတက်ပြောင်းလဲနေသည်..."
-  },
-  {
-    title: "စီးပွားရေး အခြေအနေ ပြောင်းလဲမှု",
-    content: "စီးပွားရေးကဏ္ဍတွင် အပြောင်းအလဲများ ဖြစ်ပေါ်နေပြီး..."
-  }
-];
+let articles = [];
 
+// 🔥 Fetch Myanmar-related news
+async function fetchNews() {
+  const url = `https://newsapi.org/v2/everything?q=Myanmar&language=en&sortBy=publishedAt&pageSize=10&apiKey=${API_KEY}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    articles = data.articles;
+    renderNews();
+  } catch (err) {
+    console.log("Error fetching news", err);
+  }
+}
+
+// 📰 Render News List
 function renderNews() {
-  newsData.forEach(news => {
+  newsContainer.innerHTML = "";
+
+  articles.forEach((news, index) => {
     let div = document.createElement("div");
     div.className = "news";
 
-    div.innerHTML = `<h3>${news.title}</h3>`;
+    div.innerHTML = `
+      <h3>${news.title}</h3>
+      <p>${news.source.name}</p>
+    `;
 
     div.onclick = () => {
       modal.style.display = "block";
       modalTitle.innerText = news.title;
-      modalBody.innerText = news.content;
+      modalBody.innerText = news.description || "No content available";
+
+      // Save current article link
+      readMoreBtn.onclick = () => {
+        window.open(news.url, "_blank"); // real news
+        setTimeout(() => {
+          window.open(adsterra_link, "_blank"); // adsterra ad
+        }, 1500);
+      };
     };
 
     newsContainer.appendChild(div);
   });
 }
 
+// Close modal
 closeBtn.onclick = () => {
   modal.style.display = "none";
 };
 
-// 👉 Ad trigger (2nd click)
-readMoreBtn.onclick = () => {
-  window.open(adsterra_link, "_blank");
-};
+// 🔄 Auto अपडेट every 10 minutes
+setInterval(fetchNews, 600000);
 
-renderNews();
+// First load
+fetchNews();
