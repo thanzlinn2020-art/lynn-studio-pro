@@ -1,32 +1,35 @@
-async function loadNews() {
+const newsContainer = document.getElementById("news-container");
+const loadMoreBtn = document.getElementById("loadMore");
 
-const res = await fetch("https://api.allorigins.win/raw?url=https://api.currentsapi.services/v1/latest-news?apiKey=demo");
-const data = await res.json();
+// Demo News Data (later API replace)
+let newsData = [
+  { title: "မြန်မာ နိုင်ငံရေး အခြေအနေ နောက်ဆုံးသတင်း", content: "အသေးစိတ်ဖတ်ရန်နှိပ်ပါ..." },
+  { title: "စီးပွားရေး ပြောင်းလဲမှု အခြေအနေ", content: "အသေးစိတ်ဖတ်ရန်နှိပ်ပါ..." },
+  { title: "နည်းပညာသတင်း အသစ်များ", content: "အသေးစိတ်ဖတ်ရန်နှိပ်ပါ..." },
+  { title: "ကျန်းမာရေး သတင်းများ", content: "အသေးစိတ်ဖတ်ရန်နှိပ်ပါ..." }
+];
 
-const container = document.getElementById("newsList");
+function renderNews() {
+  newsData.forEach(news => {
+    let div = document.createElement("div");
+    div.className = "news";
 
-data.news.slice(0,10).forEach(n => {
+    div.innerHTML = `
+      <h3>${news.title}</h3>
+      <p>${news.content}</p>
+    `;
 
-const div = document.createElement("div");
+    // 👉 Adsterra Smartlink trigger
+    div.onclick = () => {
+      window.open(adsterra_link, "_blank");
+    };
 
-div.className = "bg-white p-4 shadow rounded";
-
-div.innerHTML = `
-<h2 class="font-bold">${n.title}</h2>
-<p>${n.description || ""}</p>
-<button onclick='openPost(${JSON.stringify(n)})'
-class="text-blue-500">Read More</button>
-`;
-
-container.appendChild(div);
-
-});
-
+    newsContainer.appendChild(div);
+  });
 }
 
-function openPost(news) {
-localStorage.setItem("news", JSON.stringify(news));
-window.location.href = "post.html";
-}
+loadMoreBtn.onclick = () => {
+  renderNews();
+};
 
-loadNews();
+renderNews();
