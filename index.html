@@ -2,13 +2,32 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Myanmar News Daily</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script>
-    var adsterra_link = "YOUR_SMARTLINK";
-  </script>
+  <style>
+    body { font-family: sans-serif; background:#f4f4f4; margin:0; }
+    header { background:red; color:white; padding:15px; text-align:center; }
+    .news { background:white; margin:10px; padding:15px; border-radius:10px; cursor:pointer; }
+    
+    /* MODAL */
+    .modal {
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.7);
+    }
+    .modal-content {
+      background:white;
+      margin:20% auto;
+      padding:20px;
+      width:90%;
+      border-radius:10px;
+    }
+    #close { float:right; cursor:pointer; }
+    button { width:100%; padding:10px; margin-top:10px; }
+  </style>
 </head>
 
 <body>
@@ -17,24 +36,60 @@
   <h1>🇲🇲 Myanmar News Daily</h1>
 </header>
 
-<main id="news-container"></main>
+<div id="news-container"></div>
 
-<!-- News Detail Modal -->
+<!-- MODAL -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <span id="close">&times;</span>
-    <h2 id="modal-title"></h2>
-    <p id="modal-body"></p>
+    <span id="close">X</span>
+    <h2 id="title"></h2>
+    <p id="content"></p>
 
-    <!-- Banner Ad -->
-    <div class="ad">
-      YOUR_AD_CODE_HERE
-    </div>
-
-    <button id="readMore">ဆက်လက်ဖတ်ရန်</button>
+    <button id="readMore">ဆက်ဖတ်ရန်</button>
   </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+const adsterra_link = "https://www.profitablecpmratenetwork.com/dt1cpppaa?key=c6f028ae9ae8a722d6528cfeb9032912; // test link
+
+const news = [
+  {
+    title: "မြန်မာ နောက်ဆုံးသတင်း",
+    content: "ဒီနေ့ မြန်မာနိုင်ငံတွင် ဖြစ်ပေါ်နေသော သတင်းများ..."
+  },
+  {
+    title: "စီးပွားရေး သတင်း",
+    content: "စီးပွားရေးအခြေအနေများ ပြောင်းလဲနေသည်..."
+  }
+];
+
+const container = document.getElementById("news-container");
+const modal = document.getElementById("modal");
+const title = document.getElementById("title");
+const content = document.getElementById("content");
+
+news.forEach(n => {
+  const div = document.createElement("div");
+  div.className = "news";
+  div.innerHTML = `<h3>${n.title}</h3>`;
+
+  div.onclick = () => {
+    modal.style.display = "block";
+    title.innerText = n.title;
+    content.innerText = n.content;
+  };
+
+  container.appendChild(div);
+});
+
+document.getElementById("close").onclick = () => {
+  modal.style.display = "none";
+};
+
+document.getElementById("readMore").onclick = () => {
+  window.open(adsterra_link, "_blank");
+};
+</script>
+
 </body>
 </html>
