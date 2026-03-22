@@ -60,7 +60,7 @@ closeBtn.onclick = () => {
   modal.style.display = "none";
 };
 
-// 🔄 Auto अपडेट every 10 minutes
+// 🔄 Auto  every 10 minutes
 setInterval(fetchNews, 600000);
 
 // First load
