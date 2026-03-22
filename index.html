@@ -1,94 +1,45 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
-  <meta charset="UTF-8">
-  <title>Myanmar News Daily</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Myanmar News</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body { font-family: sans-serif; background:#f4f4f4; margin:0; }
-    header { background:red; color:white; padding:15px; text-align:center; }
-    .news { background:white; margin:10px; padding:15px; border-radius:10px; cursor:pointer; }
-    
-    /* MODAL */
-    .modal {
-      display:none;
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background:rgba(0,0,0,0.7);
-    }
-    .modal-content {
-      background:white;
-      margin:20% auto;
-      padding:20px;
-      width:90%;
-      border-radius:10px;
-    }
-    #close { float:right; cursor:pointer; }
-    button { width:100%; padding:10px; margin-top:10px; }
-  </style>
+<style>
+body{font-family:sans-serif;margin:0;background:#f4f4f4}
+header{background:red;color:white;text-align:center;padding:15px}
+.news{background:white;margin:10px;padding:15px;border-radius:10px;cursor:pointer}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>🇲🇲 Myanmar News Daily</h1>
+  <h2>Myanmar News Daily</h2>
 </header>
 
-<div id="news-container"></div>
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span id="close">X</span>
-    <h2 id="title"></h2>
-    <p id="content"></p>
-
-    <button id="readMore">ဆက်ဖတ်ရန်</button>
-  </div>
-</div>
+<div id="news"></div>
 
 <script>
-const adsterra_link = "https://www.profitablecpmratenetwork.com/dt1cpppaa?key=c6f028ae9ae8a722d6528cfeb9032912; // test link
-
-const news = [
-  {
-    title: "မြန်မာ နောက်ဆုံးသတင်း",
-    content: "ဒီနေ့ မြန်မာနိုင်ငံတွင် ဖြစ်ပေါ်နေသော သတင်းများ..."
-  },
-  {
-    title: "စီးပွားရေး သတင်း",
-    content: "စီးပွားရေးအခြေအနေများ ပြောင်းလဲနေသည်..."
-  }
+// 👉 NEWS DATA (ဒီမှာပဲအရေးကြီး)
+const newsData = [
+  "မြန်မာနိုင်ငံ နောက်ဆုံးသတင်းများ",
+  "စီးပွားရေး အခြေအနေ update",
+  "နည်းပညာသတင်းအသစ်များ",
+  "ကျန်းမာရေး သတင်းများ"
 ];
 
-const container = document.getElementById("news-container");
-const modal = document.getElementById("modal");
-const title = document.getElementById("title");
-const content = document.getElementById("content");
+const box = document.getElementById("news");
 
-news.forEach(n => {
+// 👉 SHOW NEWS
+newsData.forEach(item => {
   const div = document.createElement("div");
   div.className = "news";
-  div.innerHTML = `<h3>${n.title}</h3>`;
-
-  div.onclick = () => {
-    modal.style.display = "block";
-    title.innerText = n.title;
-    content.innerText = n.content;
-  };
-
-  container.appendChild(div);
+  div.innerText = item;
+  box.appendChild(div);
 });
 
-document.getElementById("close").onclick = () => {
-  modal.style.display = "none";
-};
-
-document.getElementById("readMore").onclick = () => {
-  window.open(adsterra_link, "_blank");
-};
+console.log("News loaded OK");
 </script>
 
 </body>
